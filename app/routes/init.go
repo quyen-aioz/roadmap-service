@@ -31,7 +31,7 @@ func initHTTPServer(e *echo.Echo) error {
 		LogLatency: true,
 		LogError:   true,
 
-		LogValuesFunc: func(c echo.Context, v middleware.RequestLoggerValues) error {
+		LogValuesFunc: func(_ echo.Context, v middleware.RequestLoggerValues) error {
 			fmt.Printf("[%s] %s/%d %s %v\n",
 				time.Now().Format(time.RFC3339),
 				v.Method,

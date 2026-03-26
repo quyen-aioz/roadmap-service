@@ -11,7 +11,7 @@ type (
 	}
 )
 
-func (h *Handler) GetFoo(ctx context.Context, _ *humax.Empty) (*GetFooResponse, error) {
+func (h *Handler) GetFoo(_ context.Context, _ *humax.Empty) (*GetFooResponse, error) {
 	return &GetFooResponse{
 		Name: "wakanda",
 	}, nil
