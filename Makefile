@@ -1,10 +1,10 @@
 API=api
 GOLANGCI_LINT=$(shell go env GOPATH)/bin/golangci-lint
 
-build: 
+build: lint
 	@go build -o bin/${API} ./app/*.go
 
-run: 
+run: build
 	@bin/${API}
 
 lint:
