@@ -7,9 +7,10 @@ import (
 )
 
 type FindQueryBuilder struct {
-	ID     string
-	Title  string
-	Status Status
+	ID      string
+	Title   string
+	Status  Status
+	GroupID string
 }
 
 func (q *FindQueryBuilder) Build() (string, []any) {
@@ -33,6 +34,11 @@ func (q *FindQueryBuilder) Build() (string, []any) {
 		args = append(args, q.Status)
 	}
 
+	if q.GroupID != "" {
+		clauses = append(clauses, "group_id = ?")
+		args = append(args, q.GroupID)
+	}
+
 	// Join all clauses with " AND "
 	whereClause := " WHERE " + strings.Join(clauses, " AND ")
 
@@ -43,6 +49,7 @@ type RoadmapUpdateBuilder struct {
 	Title     *string
 	Content   *string
 	Status    *Status
+	GroupID   *string
 	StartDate *time.Time
 	EndDate   *time.Time
 }
@@ -62,6 +69,10 @@ func (u *RoadmapUpdateBuilder) Build() (string, []any, error) {
 	if u.Status != nil {
 		clauses = append(clauses, "status = ?")
 		args = append(args, *u.Status)
+	}
+	if u.GroupID != nil {
+		clauses = append(clauses, "group_id = ?")
+		args = append(args, *u.GroupID)
 	}
 	if u.StartDate != nil {
 		clauses = append(clauses, "start_date = ?")

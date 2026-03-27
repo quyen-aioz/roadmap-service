@@ -9,8 +9,8 @@ import (
 func (r *SqliteRepo) Create(ctx context.Context, roadmap *roadmapmodel.Roadmap) (string, error) {
 	newID := GenerateHexID()
 	query := `
-		INSERT INTO roadmap (id, title, content, status, start_date, end_date, created_at, updated_at)
-		VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+		INSERT INTO roadmap (id, title, content, status, group_id, start_date, end_date, created_at, updated_at)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
 	`
 
 	_, err := r.db.ExecContext(ctx, query,
@@ -18,6 +18,7 @@ func (r *SqliteRepo) Create(ctx context.Context, roadmap *roadmapmodel.Roadmap) 
 		roadmap.Title,
 		roadmap.Content,
 		roadmap.Status,
+		roadmap.GroupID,
 		roadmap.StartDate,
 		roadmap.EndDate,
 		roadmap.CreatedAt,

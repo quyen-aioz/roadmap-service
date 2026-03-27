@@ -70,5 +70,15 @@ func Init(api humax.API) error {
 		CustomMiddlewares: middlewares,
 	}, handler.DeleteRoadmap)
 
+	// POST /v1/roadmap/sync
+	humax.Register(api, humax.Operation{
+		Operation: huma.Operation{
+			OperationID: "Sync Roadmap",
+			Method:      http.MethodPost,
+			Path:        "/sync",
+		},
+		CustomMiddlewares: middlewares,
+	}, handler.SyncRoadmap)
+
 	return nil
 }

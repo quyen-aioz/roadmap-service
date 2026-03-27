@@ -51,3 +51,12 @@ func (svc *Service) DeleteRoadmap(ctx context.Context, id string) error {
 
 	return nil
 }
+
+func (svc *Service) SyncRoadmap(ctx context.Context, roadmaps []roadmapmodel.Roadmap, deleteIDs []string) ([]roadmapmodel.Roadmap, error) {
+	result, err := svc.repo.Sync(ctx, roadmaps, deleteIDs)
+	if err != nil {
+		return nil, fmt.Errorf("sync roadmap: %w", err)
+	}
+
+	return result, nil
+}

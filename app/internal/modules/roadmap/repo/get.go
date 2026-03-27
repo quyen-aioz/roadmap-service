@@ -8,7 +8,7 @@ import (
 
 func (r *SqliteRepo) GetRoadmap(ctx context.Context) ([]roadmapmodel.Roadmap, error) {
 	rows, err := r.db.QueryContext(ctx, `
-		SELECT id, title, content, status, start_date, end_date, created_at, updated_at, deleted_at
+		SELECT id, title, content, status, group_id, start_date, end_date, created_at, updated_at, deleted_at
 		FROM roadmap
 		WHERE deleted_at IS NULL
 	`)
@@ -26,6 +26,7 @@ func (r *SqliteRepo) GetRoadmap(ctx context.Context) ([]roadmapmodel.Roadmap, er
 			&roadmap.Title,
 			&roadmap.Content,
 			&roadmap.Status,
+			&roadmap.GroupID,
 			&roadmap.StartDate,
 			&roadmap.EndDate,
 			&roadmap.CreatedAt,
@@ -46,7 +47,7 @@ func (r *SqliteRepo) GetRoadmap(ctx context.Context) ([]roadmapmodel.Roadmap, er
 func (r *SqliteRepo) FindOne(ctx context.Context, q roadmapmodel.FindQueryBuilder) (roadmapmodel.Roadmap, error) {
 	whereClause, args := q.Build()
 
-	baseQuery := `SELECT id, title, content, status, start_date, end_date, created_at, updated_at, deleted_at FROM roadmap`
+	baseQuery := `SELECT id, title, content, status, group_id, start_date, end_date, created_at, updated_at, deleted_at FROM roadmap`
 	fullQuery := baseQuery + whereClause + " LIMIT 1"
 
 	var roadmap roadmapmodel.Roadmap
@@ -55,6 +56,7 @@ func (r *SqliteRepo) FindOne(ctx context.Context, q roadmapmodel.FindQueryBuilde
 		&roadmap.Title,
 		&roadmap.Content,
 		&roadmap.Status,
+		&roadmap.GroupID,
 		&roadmap.StartDate,
 		&roadmap.EndDate,
 		&roadmap.CreatedAt,

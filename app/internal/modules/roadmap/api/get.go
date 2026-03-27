@@ -26,6 +26,7 @@ func (h *Handler) GetRoadmap(ctx context.Context, _ *humax.Empty) (*GetRoadmapRe
 			Title:     r.Title,
 			Content:   r.Content,
 			Status:    r.Status,
+			GroupID:   r.GroupID,
 			StartDate: r.StartDate,
 			EndDate:   r.EndDate,
 			CreatedAt: r.CreatedAt,

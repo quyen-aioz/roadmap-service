@@ -13,6 +13,7 @@ type (
 			Title     string              `json:"title" validate:"required"`
 			Content   string              `json:"content" validate:"required"`
 			Status    roadmapmodel.Status `json:"status" validate:"required"`
+			GroupID   string              `json:"group_id" validate:"required"`
 			StartDate time.Time           `json:"start_date" validate:"required"`
 			EndDate   time.Time           `json:"end_date" validate:"required"`
 		}
@@ -33,6 +34,7 @@ func (h *Handler) CreateRoadmap(ctx context.Context, req *CreateRoadmapRequest) 
 		Title:     req.Body.Title,
 		Content:   req.Body.Content,
 		Status:    status,
+		GroupID:   req.Body.GroupID,
 		StartDate: req.Body.StartDate,
 		EndDate:   req.Body.EndDate,
 		CreatedAt: time.Now(),
@@ -55,6 +57,7 @@ type (
 			Title     *string              `json:"title,omitempty"`
 			Content   *string              `json:"content,omitempty"`
 			Status    *roadmapmodel.Status `json:"status,omitempty"`
+			GroupID   *string              `json:"group_id,omitempty"`
 			StartDate *time.Time           `json:"start_date,omitempty"`
 			EndDate   *time.Time           `json:"end_date,omitempty"`
 		}
@@ -72,6 +75,7 @@ func (h *Handler) UpdateRoadmap(ctx context.Context, req *UpdateRoadmapRequest) 
 		Title:     req.Body.Title,
 		Content:   req.Body.Content,
 		Status:    status,
+		GroupID:   req.Body.GroupID,
 		StartDate: req.Body.StartDate,
 		EndDate:   req.Body.EndDate,
 	})
@@ -85,6 +89,7 @@ func (h *Handler) UpdateRoadmap(ctx context.Context, req *UpdateRoadmapRequest) 
 		Title:     roadmap.Title,
 		Content:   roadmap.Content,
 		Status:    roadmap.Status,
+		GroupID:   roadmap.GroupID,
 		StartDate: roadmap.StartDate,
 		EndDate:   roadmap.EndDate,
 		CreatedAt: roadmap.CreatedAt,

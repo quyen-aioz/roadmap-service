@@ -30,6 +30,7 @@ func createTable(db *sql.DB) error {
 			title TEXT NOT NULL,
 			content TEXT,
 			status TEXT NOT NULL,
+			group_id TEXT,
 			start_date DATETIME NOT NULL,
 			end_date DATETIME NOT NULL,
 			created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
