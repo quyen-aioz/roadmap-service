@@ -22,11 +22,14 @@ func (h *Handler) GetRoadmap(ctx context.Context, _ *humax.Empty) (*GetRoadmapRe
 	roadmapResp := make([]roadmapmodel.RoadmapDTO, 0, len(roadmap))
 	for _, r := range roadmap {
 		roadmapResp = append(roadmapResp, roadmapmodel.RoadmapDTO{
-			ID:          r.ID,
-			Name:        r.Name,
-			Description: r.Description,
-			CreatedAt:   r.CreatedAt,
-			UpdatedAt:   r.UpdatedAt,
+			ID:        r.ID,
+			Title:     r.Title,
+			Content:   r.Content,
+			Status:    r.Status,
+			StartDate: r.StartDate,
+			EndDate:   r.EndDate,
+			CreatedAt: r.CreatedAt,
+			UpdatedAt: r.UpdatedAt,
 		})
 	}
 

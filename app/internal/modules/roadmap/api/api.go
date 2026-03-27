@@ -50,5 +50,25 @@ func Init(api humax.API) error {
 		CustomMiddlewares: middlewares,
 	}, handler.CreateRoadmap)
 
+	// PUT /v1/roadmap/{id}
+	humax.Register(api, humax.Operation{
+		Operation: huma.Operation{
+			OperationID: "Update Roadmap",
+			Method:      http.MethodPut,
+			Path:        "/{id}",
+		},
+		CustomMiddlewares: middlewares,
+	}, handler.UpdateRoadmap)
+
+	// DELETE /v1/roadmap/{id}
+	humax.Register(api, humax.Operation{
+		Operation: huma.Operation{
+			OperationID: "Delete Roadmap",
+			Method:      http.MethodDelete,
+			Path:        "/{id}",
+		},
+		CustomMiddlewares: middlewares,
+	}, handler.DeleteRoadmap)
+
 	return nil
 }

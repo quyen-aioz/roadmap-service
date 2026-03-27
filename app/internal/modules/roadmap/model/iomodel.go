@@ -4,10 +4,13 @@ import "time"
 
 type (
 	RoadmapDTO struct {
-		ID          int64     `json:"id"`
-		Name        string    `json:"name"`
-		Description string    `json:"description"`
-		CreatedAt   time.Time `json:"created_at"`
-		UpdatedAt   time.Time `json:"updated_at"`
+		ID        string    `json:"id"`
+		Title     string    `json:"title"`
+		Content   string    `json:"content"`
+		Status    Status    `json:"status"`
+		StartDate time.Time `json:"start_date"`
+		EndDate   time.Time `json:"end_date"`
+		CreatedAt time.Time `json:"created_at"`
+		UpdatedAt time.Time `json:"updated_at"`
 	}
 )

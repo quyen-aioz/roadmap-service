@@ -1,7 +1,6 @@
 package humax
 
 import (
-	"fmt"
 	"net/http"
 	"roadmap/pkg/jwtx"
 	"strings"
@@ -39,7 +38,6 @@ func (m *AccessTokenMiddleware) Apply(_ huma.API) func(ctx huma.Context, next fu
 			return
 		}
 
-		fmt.Printf("Wakanda -> %s", claims.UserID)
 		nextContext := huma.WithValue(ctx, _claimsContextKey, claims)
 
 		next(nextContext)

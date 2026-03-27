@@ -23,6 +23,8 @@ const (
 )
 
 func main() {
+	must(setDefaultTimezoneUTC(), "set default timezone UTC")
+
 	serverconfig.Init()
 	conf := serverconfig.Get()
 	httpx.DebugMsgEnabled = serverconfig.IsNonPROD()
@@ -66,6 +68,11 @@ func main() {
 	}
 
 	log.Println("server shutdown gracefully")
+}
+
+func setDefaultTimezoneUTC() error {
+	time.Local = time.UTC
+	return nil
 }
 
 func must(err error, errMsg string) {

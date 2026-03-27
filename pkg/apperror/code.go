@@ -13,6 +13,12 @@ const (
 	ErrAuthExpiredToken ErrorCode = "auth_expired_token"
 )
 
+// Roadmap
+const (
+	ErrInvalidStatus ErrorCode = "invalid_status"
+	ErrNotFound      ErrorCode = "not_found"
+)
+
 func (e ErrorCode) String() string {
 	return string(e)
 }

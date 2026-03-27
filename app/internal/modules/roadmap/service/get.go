@@ -11,5 +11,17 @@ func (svc *Service) GetRoadmap(ctx context.Context) ([]roadmapmodel.Roadmap, err
 	if err != nil {
 		return nil, fmt.Errorf("get roadmap: %w", err)
 	}
+
+	return roadmap, nil
+}
+
+func (svc *Service) GetRoadmapByID(ctx context.Context, id string) (roadmapmodel.Roadmap, error) {
+	roadmap, err := svc.repo.FindOne(ctx, roadmapmodel.FindQueryBuilder{
+		ID: id,
+	})
+	if err != nil {
+		return roadmapmodel.Roadmap{}, fmt.Errorf("get roadmap by id: %w", err)
+	}
+
 	return roadmap, nil
 }

@@ -26,9 +26,12 @@ func InitDB(dbPath string) (*sql.DB, error) {
 func createTable(db *sql.DB) error {
 	createTableQuery := `
 		CREATE TABLE IF NOT EXISTS roadmap (
-			id INTEGER PRIMARY KEY AUTOINCREMENT,
-			name TEXT NOT NULL,
-			description TEXT,
+			id TEXT PRIMARY KEY,
+			title TEXT NOT NULL,
+			content TEXT,
+			status TEXT NOT NULL,
+			start_date DATETIME NOT NULL,
+			end_date DATETIME NOT NULL,
 			created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 			updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 			deleted_at DATETIME

@@ -3,10 +3,21 @@ package roadmapmodel
 import "time"
 
 type Roadmap struct {
-	ID          int64
-	Name        string
-	Description string
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
-	DeletedAt   *time.Time
+	ID        string
+	Title     string
+	Content   string
+	Status    Status
+	StartDate time.Time
+	EndDate   time.Time
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt *time.Time
+}
+
+type UpdateRoadmapReq struct {
+	Title     *string
+	Content   *string
+	Status    *Status
+	StartDate *time.Time
+	EndDate   *time.Time
 }
