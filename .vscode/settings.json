@@ -6,6 +6,6 @@
   "go.formatTool": "goimports",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.organizeImports": true
+    "source.organizeImports": "explicit"
   }
 }

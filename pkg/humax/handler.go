@@ -31,8 +31,13 @@ func (api API) Group(path string, tags ...string) API {
 	}
 }
 
+type Middleware interface {
+	Apply(api huma.API) func(ctx huma.Context, next func(huma.Context))
+}
+
 type Operation struct {
 	huma.Operation
+	CustomMiddlewares []Middleware
 }
 
 type Output[T any] struct {
@@ -47,6 +52,12 @@ func (o Operation) prepare(api API) huma.Operation {
 	operation.Path = api.group + operation.Path
 	operation.Security = append(operation.Security, security)
 	// quyen@note: middlewares append later (if need)
+	for _, m := range o.CustomMiddlewares {
+		operation.Middlewares = append(operation.Middlewares, m.Apply(api))
+		if _, ok := m.(*AccessTokenMiddleware); ok {
+			security["bearer"] = []string{}
+		}
+	}
 
 	return operation
 }

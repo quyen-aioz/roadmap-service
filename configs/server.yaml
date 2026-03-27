@@ -6,3 +6,5 @@ Server:
 SQLite:
   Directory: "db"
   DatabaseName: "roadmap.db"
+JWT:
+  SigningKey: "a-string-secret-at-least-256-bits-long"
