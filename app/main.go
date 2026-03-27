@@ -19,16 +19,21 @@ import (
 
 const (
 	gracefulShutdown = 15 * time.Second
+	warmup           = 30 * time.Second
 )
 
 func main() {
-	httpx.DebugMsgEnabled = true
-
 	serverconfig.Init()
 	conf := serverconfig.Get()
+	httpx.DebugMsgEnabled = serverconfig.IsNonPROD()
 
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
+
+	timeoutContext, cancel := context.WithTimeout(ctx, warmup)
+	defer cancel()
+
+	must(init3rdParties(timeoutContext), "init 3rd parties")
 
 	e := routes.New()
 
@@ -61,4 +66,11 @@ func main() {
 	}
 
 	log.Println("server shutdown gracefully")
+}
+
+func must(err error, errMsg string) {
+	if err == nil {
+		return
+	}
+	log.Fatalf("%s: %v", errMsg, err)
 }

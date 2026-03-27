@@ -12,8 +12,14 @@ type Server struct {
 	Env  string
 }
 
+type SQLite struct {
+	Directory    string
+	DatabaseName string
+}
+
 type BaseConfig struct {
 	Server Server
+	SQLite SQLite
 }
 
 func (c BaseConfig) GetServer() Server {
