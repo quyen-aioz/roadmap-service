@@ -4,6 +4,7 @@ go 1.26.1
 
 require (
 	github.com/danielgtaylor/huma/v2 v2.37.3
+	github.com/golang-jwt/jwt/v5 v5.3.1
 	github.com/labstack/echo/v4 v4.15.1
 	github.com/mattn/go-sqlite3 v1.14.37
 	github.com/spf13/viper v1.21.0

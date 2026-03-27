@@ -28,7 +28,9 @@ func Init(api humax.API) error {
 	if err != nil {
 		return err
 	}
-
+	middlewares := []humax.Middleware{
+		humax.RequireAccessToken(),
+	}
 	// GET /v1/roadmap
 	humax.Register(api, humax.Operation{
 		Operation: huma.Operation{
@@ -37,6 +39,16 @@ func Init(api humax.API) error {
 			Path:        "",
 		},
 	}, handler.GetRoadmap)
+
+	// POST /v1/roadmap
+	humax.Register(api, humax.Operation{
+		Operation: huma.Operation{
+			OperationID: "Create Roadmap",
+			Method:      http.MethodPost,
+			Path:        "",
+		},
+		CustomMiddlewares: middlewares,
+	}, handler.CreateRoadmap)
 
 	return nil
 }

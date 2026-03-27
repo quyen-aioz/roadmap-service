@@ -17,9 +17,14 @@ type SQLite struct {
 	DatabaseName string
 }
 
+type JWT struct {
+	SigningKey string
+}
+
 type BaseConfig struct {
 	Server Server
 	SQLite SQLite
+	JWT    JWT
 }
 
 func (c BaseConfig) GetServer() Server {
