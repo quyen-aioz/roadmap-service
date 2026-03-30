@@ -2,10 +2,9 @@ package roadmaprepo
 
 import (
 	"context"
-	"crypto/rand"
-	"database/sql"
-	"encoding/hex"
 	roadmapmodel "roadmap/app/internal/modules/roadmap/model"
+
+	"gorm.io/gorm"
 )
 
 type Repository interface {
@@ -20,19 +19,11 @@ type Repository interface {
 }
 
 type SqliteRepo struct {
-	db *sql.DB
+	db *gorm.DB
 }
 
-func New(db *sql.DB) *SqliteRepo {
+func New(db *gorm.DB) *SqliteRepo {
 	return &SqliteRepo{
 		db: db,
 	}
-}
-
-func GenerateHexID() string {
-	b := make([]byte, 8) // 8 bytes = 16 hex characters
-	if _, err := rand.Read(b); err != nil {
-		panic(err)
-	}
-	return hex.EncodeToString(b)
 }

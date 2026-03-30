@@ -40,36 +40,6 @@ func Init(api humax.API) error {
 		},
 	}, handler.GetRoadmap)
 
-	// POST /v1/roadmap
-	humax.Register(api, humax.Operation{
-		Operation: huma.Operation{
-			OperationID: "Create Roadmap",
-			Method:      http.MethodPost,
-			Path:        "",
-		},
-		CustomMiddlewares: middlewares,
-	}, handler.CreateRoadmap)
-
-	// PUT /v1/roadmap/{id}
-	humax.Register(api, humax.Operation{
-		Operation: huma.Operation{
-			OperationID: "Update Roadmap",
-			Method:      http.MethodPut,
-			Path:        "/{id}",
-		},
-		CustomMiddlewares: middlewares,
-	}, handler.UpdateRoadmap)
-
-	// DELETE /v1/roadmap/{id}
-	humax.Register(api, humax.Operation{
-		Operation: huma.Operation{
-			OperationID: "Delete Roadmap",
-			Method:      http.MethodDelete,
-			Path:        "/{id}",
-		},
-		CustomMiddlewares: middlewares,
-	}, handler.DeleteRoadmap)
-
 	// POST /v1/roadmap/sync
 	humax.Register(api, humax.Operation{
 		Operation: huma.Operation{
@@ -79,6 +49,36 @@ func Init(api humax.API) error {
 		},
 		CustomMiddlewares: middlewares,
 	}, handler.SyncRoadmap)
+
+	// // POST /v1/roadmap
+	// humax.Register(api, humax.Operation{
+	// 	Operation: huma.Operation{
+	// 		OperationID: "Create Roadmap",
+	// 		Method:      http.MethodPost,
+	// 		Path:        "",
+	// 	},
+	// 	CustomMiddlewares: middlewares,
+	// }, handler.CreateRoadmap)
+
+	// // PUT /v1/roadmap/{id}
+	// humax.Register(api, humax.Operation{
+	// 	Operation: huma.Operation{
+	// 		OperationID: "Update Roadmap",
+	// 		Method:      http.MethodPut,
+	// 		Path:        "/{id}",
+	// 	},
+	// 	CustomMiddlewares: middlewares,
+	// }, handler.UpdateRoadmap)
+
+	// // DELETE /v1/roadmap/{id}
+	// humax.Register(api, humax.Operation{
+	// 	Operation: huma.Operation{
+	// 		OperationID: "Delete Roadmap",
+	// 		Method:      http.MethodDelete,
+	// 		Path:        "/{id}",
+	// 	},
+	// 	CustomMiddlewares: middlewares,
+	// }, handler.DeleteRoadmap)
 
 	return nil
 }

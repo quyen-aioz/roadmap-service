@@ -1,6 +1,8 @@
 package roadmapmodel
 
 import (
+	"crypto/rand"
+	"encoding/hex"
 	"fmt"
 	"strings"
 	"time"
@@ -94,4 +96,12 @@ func (u *RoadmapUpdateBuilder) Build() (string, []any, error) {
 	setClause := " SET " + strings.Join(clauses, ", ")
 
 	return setClause, args, nil
+}
+
+func GenerateHexID() string {
+	b := make([]byte, 8) // 8 bytes = 16 hex characters
+	if _, err := rand.Read(b); err != nil {
+		panic(err)
+	}
+	return hex.EncodeToString(b)
 }
