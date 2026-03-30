@@ -5,10 +5,14 @@ import (
 	"fmt"
 	"roadmap/app/internal/core/serverconfig"
 	roadmapmodel "roadmap/app/internal/modules/roadmap/model"
+	usermodel "roadmap/app/internal/modules/user/model"
+	userrepo "roadmap/app/internal/modules/user/repo"
+	userservice "roadmap/app/internal/modules/user/service"
 	"roadmap/pkg/jwtx"
 	"roadmap/pkg/sqlitex"
 
 	"golang.org/x/sync/errgroup"
+	"gorm.io/gorm"
 )
 
 func init3rdParties(ctx context.Context) error {
@@ -33,10 +37,22 @@ func initSqlite(_ context.Context) error {
 		return fmt.Errorf("failed to init db: %w", err)
 	}
 
-	if err := db.AutoMigrate(&roadmapmodel.Roadmap{}); err != nil {
+	if err := db.AutoMigrate(&roadmapmodel.Roadmap{}, &usermodel.User{}); err != nil {
 		return fmt.Errorf("failed to migrate table: %w", err)
 	}
 
+	if err := seedAdmin(db); err != nil {
+		return fmt.Errorf("failed to seed admin: %w", err)
+	}
+	return nil
+}
+
+func seedAdmin(db *gorm.DB) error {
+	adminConf := serverconfig.Get().SeedAdmin
+	userSvc := userservice.NewWithRepo(userrepo.New(db))
+	if err := userSvc.SeedAdmin(context.Background(), adminConf.Username, adminConf.Password); err != nil {
+		return fmt.Errorf("failed to seed admin: %w", err)
+	}
 	return nil
 }
 

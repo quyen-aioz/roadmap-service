@@ -8,3 +8,6 @@ SQLite:
   DatabaseName: "roadmap.db"
 JWT:
   SigningKey: "a-string-secret-at-least-256-bits-long"
+SeedAdmin:
+  Username: "admin"
+  Password: "admin"

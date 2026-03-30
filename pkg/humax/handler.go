@@ -45,12 +45,11 @@ type Output[T any] struct {
 }
 
 func (o Operation) prepare(api API) huma.Operation {
-	security := make(map[string][]string)
-
 	operation := o.Operation
 	operation.Tags = append(api.tags, operation.Tags...)
 	operation.Path = api.group + operation.Path
-	operation.Security = append(operation.Security, security)
+
+	security := make(map[string][]string)
 	// quyen@note: middlewares append later (if need)
 	for _, m := range o.CustomMiddlewares {
 		operation.Middlewares = append(operation.Middlewares, m.Apply(api))
@@ -59,6 +58,7 @@ func (o Operation) prepare(api API) huma.Operation {
 		}
 	}
 
+	operation.Security = append(operation.Security, security)
 	return operation
 }
 

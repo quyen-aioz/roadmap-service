@@ -2,8 +2,10 @@ package roadmaprepo
 
 import (
 	"context"
-	"database/sql"
+	"errors"
 	roadmapmodel "roadmap/app/internal/modules/roadmap/model"
+
+	"gorm.io/gorm"
 )
 
 func (r *SqliteRepo) GetRoadmap(ctx context.Context) ([]roadmapmodel.Roadmap, error) {
@@ -26,7 +28,7 @@ func (r *SqliteRepo) FindOne(ctx context.Context, q roadmapmodel.FindQueryBuilde
 	err := r.db.WithContext(ctx).Raw(fullQuery, args...).Scan(&roadmap).Error
 
 	if err != nil {
-		if err == sql.ErrNoRows {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return roadmapmodel.Roadmap{}, roadmapmodel.ErrRoadmapNotFound
 		}
 		return roadmapmodel.Roadmap{}, err

@@ -21,10 +21,16 @@ type JWT struct {
 	SigningKey string
 }
 
+type SeedAdmin struct {
+	Username string
+	Password string
+}
+
 type BaseConfig struct {
-	Server Server
-	SQLite SQLite
-	JWT    JWT
+	Server    Server
+	SQLite    SQLite
+	JWT       JWT
+	SeedAdmin SeedAdmin
 }
 
 func (c BaseConfig) GetServer() Server {
