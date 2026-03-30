@@ -13,6 +13,7 @@ import (
 
 func New() *echo.Echo {
 	e := echo.New()
+	e.HideBanner = true
 
 	if err := initHTTPServer(e); err != nil {
 		log.Fatal("init http server: %w", err)
