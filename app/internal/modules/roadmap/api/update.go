@@ -10,12 +10,12 @@ import (
 type (
 	CreateRoadmapRequest struct {
 		Body struct {
-			Title     string              `json:"title" validate:"required"`
-			Content   string              `json:"content" validate:"required"`
-			Status    roadmapmodel.Status `json:"status" validate:"required"`
-			GroupID   string              `json:"group_id" validate:"required"`
-			StartDate time.Time           `json:"start_date" validate:"required"`
-			EndDate   time.Time           `json:"end_date" validate:"required"`
+			Title     string               `json:"title" validate:"required"`
+			Content   string               `json:"content" validate:"required"`
+			Status    roadmapmodel.Status  `json:"status" validate:"required"`
+			GroupID   roadmapmodel.GroupID `json:"group_id" validate:"required"`
+			StartDate time.Time            `json:"start_date" validate:"required"`
+			EndDate   time.Time            `json:"end_date" validate:"required"`
 		}
 	}
 	CreateRoadmapResponse struct {
@@ -25,16 +25,19 @@ type (
 
 func (h *Handler) CreateRoadmap(ctx context.Context, req *CreateRoadmapRequest) (*CreateRoadmapResponse, error) {
 	status := req.Body.Status
-
+	groupID := req.Body.GroupID
 	if !status.IsValid() {
 		return nil, roadmapmodel.ErrInvalidStatus
+	}
+	if !groupID.IsValid() {
+		return nil, roadmapmodel.ErrInvalidGroupID
 	}
 
 	roadmapID, err := h.svc.CreateRoadmap(ctx, &roadmapmodel.Roadmap{
 		Title:     req.Body.Title,
 		Content:   req.Body.Content,
 		Status:    status,
-		GroupID:   req.Body.GroupID,
+		GroupID:   groupID,
 		StartDate: req.Body.StartDate,
 		EndDate:   req.Body.EndDate,
 		CreatedAt: time.Now(),
@@ -54,28 +57,32 @@ type (
 	UpdateRoadmapRequest struct {
 		ID   string `path:"id" validate:"required"`
 		Body struct {
-			Title     *string              `json:"title,omitempty"`
-			Content   *string              `json:"content,omitempty"`
-			Status    *roadmapmodel.Status `json:"status,omitempty"`
-			GroupID   *string              `json:"group_id,omitempty"`
-			StartDate *time.Time           `json:"start_date,omitempty"`
-			EndDate   *time.Time           `json:"end_date,omitempty"`
+			Title     *string               `json:"title,omitempty"`
+			Content   *string               `json:"content,omitempty"`
+			Status    *roadmapmodel.Status  `json:"status,omitempty"`
+			GroupID   *roadmapmodel.GroupID `json:"group_id,omitempty"`
+			StartDate *time.Time            `json:"start_date,omitempty"`
+			EndDate   *time.Time            `json:"end_date,omitempty"`
 		}
 	}
 )
 
 func (h *Handler) UpdateRoadmap(ctx context.Context, req *UpdateRoadmapRequest) (*roadmapmodel.RoadmapDTO, error) {
 	status := req.Body.Status
+	groupID := req.Body.GroupID
 
 	if status != nil && !status.IsValid() {
 		return nil, roadmapmodel.ErrInvalidStatus
+	}
+	if groupID != nil && !groupID.IsValid() {
+		return nil, roadmapmodel.ErrInvalidGroupID
 	}
 
 	roadmap, err := h.svc.UpdateRoadmap(ctx, req.ID, roadmapmodel.UpdateRoadmapReq{
 		Title:     req.Body.Title,
 		Content:   req.Body.Content,
 		Status:    status,
-		GroupID:   req.Body.GroupID,
+		GroupID:   groupID,
 		StartDate: req.Body.StartDate,
 		EndDate:   req.Body.EndDate,
 	})

@@ -15,8 +15,9 @@ const (
 
 // Roadmap
 const (
-	ErrInvalidStatus ErrorCode = "invalid_status"
-	ErrNotFound      ErrorCode = "not_found"
+	ErrInvalidStatus  ErrorCode = "invalid_status"
+	ErrInvalidGroupID ErrorCode = "invalid_group"
+	ErrNotFound       ErrorCode = "not_found"
 )
 
 func (e ErrorCode) String() string {

@@ -11,13 +11,13 @@ type (
 	SyncRoadmapRequest struct {
 		Body struct {
 			Upsert []struct {
-				ID        string              `json:"id"`
-				Title     string              `json:"title" validate:"required"`
-				Content   string              `json:"content"`
-				Status    roadmapmodel.Status `json:"status" validate:"required"`
-				GroupID   string              `json:"group_id" validate:"required"`
-				StartDate time.Time           `json:"start_date" validate:"required"`
-				EndDate   time.Time           `json:"end_date" validate:"required"`
+				ID        string               `json:"id"`
+				Title     string               `json:"title" validate:"required"`
+				Content   string               `json:"content"`
+				Status    roadmapmodel.Status  `json:"status" validate:"required"`
+				GroupID   roadmapmodel.GroupID `json:"group_id" validate:"required"`
+				StartDate time.Time            `json:"start_date" validate:"required"`
+				EndDate   time.Time            `json:"end_date" validate:"required"`
 			} `json:"roadmaps"`
 			Delete []string `json:"deleteIds"`
 		}
@@ -32,6 +32,9 @@ func (h *Handler) SyncRoadmap(ctx context.Context, req *SyncRoadmapRequest) (*Sy
 	for i, r := range req.Body.Upsert {
 		if !r.Status.IsValid() {
 			return nil, roadmapmodel.ErrInvalidStatus
+		}
+		if !r.GroupID.IsValid() {
+			return nil, roadmapmodel.ErrInvalidGroupID
 		}
 
 		roadmaps[i] = roadmapmodel.Roadmap{

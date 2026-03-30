@@ -7,7 +7,7 @@ type Roadmap struct {
 	Title     string
 	Content   string
 	Status    Status
-	GroupID   string
+	GroupID   GroupID
 	StartDate time.Time
 	EndDate   time.Time
 	CreatedAt time.Time
@@ -19,7 +19,7 @@ type UpdateRoadmapReq struct {
 	Title     *string
 	Content   *string
 	Status    *Status
-	GroupID   *string
+	GroupID   *GroupID
 	StartDate *time.Time
 	EndDate   *time.Time
 }
