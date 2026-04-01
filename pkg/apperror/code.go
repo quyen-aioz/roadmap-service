@@ -17,7 +17,7 @@ const (
 const (
 	ErrInvalidStatus   ErrorCode = "invalid_status"
 	ErrInvalidGroupID  ErrorCode = "invalid_group"
-	ErrRoadmapNotFound ErrorCode = "not_found"
+	ErrRoadmapNotFound ErrorCode = "group_not_found"
 )
 
 // User

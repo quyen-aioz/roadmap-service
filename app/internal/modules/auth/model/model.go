@@ -21,3 +21,14 @@ type (
 		AccessToken string
 	}
 )
+
+type (
+	ChangePasswordReq struct {
+		OldPassword string
+		NewPassword string
+	}
+
+	ChangePasswordResp struct {
+		AccessToken string
+	}
+)

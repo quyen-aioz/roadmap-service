@@ -10,6 +10,7 @@ import (
 type Repository interface {
 	FindOne(ctx context.Context, q usermodel.FindQueryBuilder) (usermodel.User, error)
 	Create(ctx context.Context, req usermodel.CreateUserReq) (usermodel.User, error)
+	Update(ctx context.Context, userID string, req usermodel.UpdateUserReq) (usermodel.User, error)
 }
 
 type SqliteRepo struct {

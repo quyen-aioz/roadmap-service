@@ -18,8 +18,8 @@ type (
 				GroupID   roadmapmodel.GroupID `json:"group_id" validate:"required"`
 				StartDate time.Time            `json:"start_date" validate:"required"`
 				EndDate   time.Time            `json:"end_date" validate:"required"`
-			} `json:"roadmaps"`
-			Delete []string `json:"deleteIds"`
+			} `json:"roadmap"`
+			Delete []string `json:"delete_ids"`
 		}
 	}
 	SyncRoadmapResponse struct {

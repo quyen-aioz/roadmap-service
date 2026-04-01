@@ -52,6 +52,16 @@ func Init(api humax.API) error {
 		CustomMiddlewares: middlewares,
 	}, handler.GetMe)
 
+	// PATCH /v1/auth/change-password
+	humax.Register(api, humax.Operation{
+		Operation: huma.Operation{
+			OperationID: "ChangePassword",
+			Method:      http.MethodPatch,
+			Path:        "/change-password",
+		},
+		CustomMiddlewares: middlewares,
+	}, handler.ChangePassword)
+
 	// quyen@note: not allow to register, just call once to create admin user
 	// // POST /v1/auth/register
 	// humax.Register(api, humax.Operation{

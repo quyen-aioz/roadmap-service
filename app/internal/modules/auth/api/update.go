@@ -52,3 +52,34 @@ func (h *Handler) Register(ctx context.Context, req *RegisterRequest) (*humax.Em
 
 	return nil, nil
 }
+
+type (
+	ChangePasswordRequest struct {
+		Body struct {
+			OldPassword string `json:"old_password"`
+			NewPassword string `json:"new_password"`
+		}
+	}
+	ChangePasswordRespond struct {
+		AccessToken string `json:"access_token"`
+	}
+)
+
+func (h *Handler) ChangePassword(ctx context.Context, req *ChangePasswordRequest) (*ChangePasswordRespond, error) {
+	userID, err := humax.GetUserIDFromCtx(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := h.svc.ChangePassword(ctx, userID, &authmodel.ChangePasswordReq{
+		OldPassword: req.Body.OldPassword,
+		NewPassword: req.Body.NewPassword,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return &ChangePasswordRespond{
+		AccessToken: resp.AccessToken,
+	}, nil
+}

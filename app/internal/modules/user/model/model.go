@@ -29,9 +29,11 @@ type (
 		Username string
 		Password string
 	}
+)
 
-	CreateUserResp struct {
-		ID       string
-		Username string
+type (
+	UpdateUserReq struct {
+		Username *string
+		Password *string
 	}
 )

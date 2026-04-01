@@ -11,6 +11,7 @@ func DefaultConfig() huma.Config {
 			BearerFormat: "JWT",
 		},
 	}
+	config.CreateHooks = nil
 
 	return config
 }
