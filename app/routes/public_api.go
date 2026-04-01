@@ -15,7 +15,7 @@ func registerPublicAPIv1(api humax.API) error {
 
 	roadmapAPI := api.Group("/roadmap", "Roadmap")
 	if err := roadmapapi.Init(roadmapAPI); err != nil {
-		return fmt.Errorf("register foo api: %w", err)
+		return fmt.Errorf("register roadmap api: %w", err)
 	}
 
 	return nil

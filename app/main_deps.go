@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"roadmap/app/internal/core/serverconfig"
+	roadmapmodel "roadmap/app/internal/modules/roadmap/model"
 	"roadmap/pkg/jwtx"
 	"roadmap/pkg/sqlitex"
 
@@ -27,13 +28,18 @@ func initSqlite(_ context.Context) error {
 	conf := serverconfig.Get().SQLite
 	dbPath := fmt.Sprintf("%s/%s", conf.Directory, conf.DatabaseName)
 
-	_, err := sqlitex.InitDB(dbPath)
+	db, err := sqlitex.InitDB(dbPath)
 	if err != nil {
-		return fmt.Errorf("failed to create table: %w", err)
+		return fmt.Errorf("failed to init db: %w", err)
+	}
+
+	if err := db.AutoMigrate(&roadmapmodel.Roadmap{}); err != nil {
+		return fmt.Errorf("failed to migrate table: %w", err)
 	}
 
 	return nil
 }
+
 func initJWT() error {
 	conf := serverconfig.Get().JWT
 

@@ -1,12 +1,42 @@
 package roadmapmodel
 
-import "time"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
 
 type Roadmap struct {
-	ID          int64
-	Name        string
-	Description string
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
-	DeletedAt   *time.Time
+	ID        string `gorm:"primaryKey"`
+	Title     string
+	Content   string
+	Status    Status
+	GroupID   GroupID
+	StartDate time.Time
+	EndDate   time.Time
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt gorm.DeletedAt `gorm:"index"`
+}
+
+// quyen@note: gorm hook
+func (r *Roadmap) BeforeCreate(_ *gorm.DB) (err error) {
+	if r.ID == "" {
+		r.ID = GenerateHexID()
+	}
+
+	return nil
+}
+
+func (Roadmap) TableName() string {
+	return "roadmap"
+}
+
+type UpdateRoadmapReq struct {
+	Title     *string
+	Content   *string
+	Status    *Status
+	GroupID   *GroupID
+	StartDate *time.Time
+	EndDate   *time.Time
 }
