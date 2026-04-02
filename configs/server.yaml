@@ -3,6 +3,9 @@ Server:
   Host: "0.0.0.0"
   Port: 9191
   Env: "local"
+  AllowOrigins:
+    - "http://localhost:3000"
+    - "https://aioz-network-lp-git-develop-aioz-networks-projects.vercel.app"
 SQLite:
   Directory: "db"
   DatabaseName: "roadmap.db"

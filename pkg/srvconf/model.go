@@ -6,10 +6,11 @@ type Configuration interface {
 }
 
 type Server struct {
-	Name string
-	Host string
-	Port uint16
-	Env  string
+	Name         string
+	Host         string
+	Port         uint16
+	Env          string
+	AllowOrigins []string
 }
 
 type SQLite struct {

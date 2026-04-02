@@ -9,3 +9,8 @@
 # Output folders
 /bin/
 /db/
+/configs/
+
+# Environments
+deploy/.env*
+!deploy/*.example
