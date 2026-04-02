@@ -2,9 +2,10 @@ Server:
   Name: "Roadmap Service"
   Host: "0.0.0.0"
   Port: 9191
-  Env: "local"
+  Env: "staging"
   AllowOrigins:
     - "http://localhost:3000"
+    - "https://lp.attoaioz.cyou"
     - "https://aioz-network-lp-git-develop-aioz-networks-projects.vercel.app"
 SQLite:
   Directory: "db"
