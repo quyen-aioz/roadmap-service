@@ -62,7 +62,7 @@ func (svc *Service) ChangePassword(ctx context.Context, userID string, req *auth
 		return nil, err
 	}
 
-	if _, err := svc.userSvc.VerifyUser(ctx, user.Username, req.OldPassword); err != nil {
+	if !svc.userSvc.CheckPassword(user, req.OldPassword) {
 		return nil, usermodel.ErrInvalidPassword
 	}
 

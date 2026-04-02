@@ -53,6 +53,10 @@ func (svc *Service) UpdatePassword(ctx context.Context, userID, password string)
 	})
 }
 
+func (svc *Service) CheckPassword(user usermodel.User, password string) bool {
+	return comparePassword(user.Password, password)
+}
+
 func comparePassword(hashedPassword, password string) bool {
 	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password)) == nil
 }

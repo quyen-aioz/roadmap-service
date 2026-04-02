@@ -52,11 +52,11 @@ func Init(api humax.API) error {
 		CustomMiddlewares: middlewares,
 	}, handler.GetMe)
 
-	// PATCH /v1/auth/change-password
+	// POST /v1/auth/change-password
 	humax.Register(api, humax.Operation{
 		Operation: huma.Operation{
 			OperationID: "ChangePassword",
-			Method:      http.MethodPatch,
+			Method:      http.MethodPost,
 			Path:        "/change-password",
 		},
 		CustomMiddlewares: middlewares,
