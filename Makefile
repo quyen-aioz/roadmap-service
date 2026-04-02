@@ -5,7 +5,7 @@ export
 API=api
 GOLANGCI_LINT=$(shell go env GOPATH)/bin/golangci-lint
 
-IMAGE_NAME?=aioz-roadmap-service
+IMAGE_NAME?=aioz-roadmap
 
 # ── Local ─────────────────────────────────────────────────────────────────────
 build: lint
