@@ -1,0 +1,38 @@
+# Binary output
+bin/
+
+# Database
+db/
+*.db
+
+configs/
+
+# Git
+.git/
+.gitignore
+
+# Docker files
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Go test files
+*_test.go
+*.test
+
+# Makefile
+Makefile
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Deploy (Makefile)
+deploy/

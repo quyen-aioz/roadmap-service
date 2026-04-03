@@ -25,3 +25,12 @@ func (svc *Service) GetRoadmapByID(ctx context.Context, id string) (roadmapmodel
 
 	return roadmap, nil
 }
+
+func (svc *Service) GetRoadmapContent(ctx context.Context) (roadmapmodel.RoadmapContent, error) {
+	content, err := svc.repo.GetRoadmapContent(ctx)
+	if err != nil {
+		return roadmapmodel.RoadmapContent{}, fmt.Errorf("get roadmap content: %w", err)
+	}
+
+	return content, nil
+}

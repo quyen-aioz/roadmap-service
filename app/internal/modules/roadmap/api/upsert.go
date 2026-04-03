@@ -11,15 +11,17 @@ type (
 	SyncRoadmapRequest struct {
 		Body struct {
 			Upsert []struct {
-				ID        string               `json:"id"`
+				ID        string               `json:"id,omitempty"`
 				Title     string               `json:"title" validate:"required"`
-				Content   string               `json:"content"`
+				Content   string               `json:"content,omitempty"`
 				Status    roadmapmodel.Status  `json:"status" validate:"required"`
 				GroupID   roadmapmodel.GroupID `json:"group_id" validate:"required"`
+				CTALabel  string               `json:"cta_label,omitempty"`
+				CTALink   string               `json:"cta_link,omitempty"`
 				StartDate time.Time            `json:"start_date" validate:"required"`
 				EndDate   time.Time            `json:"end_date" validate:"required"`
-			} `json:"roadmaps"`
-			Delete []string `json:"deleteIds"`
+			} `json:"roadmap"`
+			Delete []string `json:"delete_ids"`
 		}
 	}
 	SyncRoadmapResponse struct {
@@ -43,6 +45,8 @@ func (h *Handler) SyncRoadmap(ctx context.Context, req *SyncRoadmapRequest) (*Sy
 			Content:   r.Content,
 			Status:    r.Status,
 			GroupID:   r.GroupID,
+			CTALabel:  r.CTALabel,
+			CTALink:   r.CTALink,
 			StartDate: r.StartDate,
 			EndDate:   r.EndDate,
 		}
@@ -61,6 +65,8 @@ func (h *Handler) SyncRoadmap(ctx context.Context, req *SyncRoadmapRequest) (*Sy
 			Content:   r.Content,
 			Status:    r.Status,
 			GroupID:   r.GroupID,
+			CTALabel:  r.CTALabel,
+			CTALink:   r.CTALink,
 			StartDate: r.StartDate,
 			EndDate:   r.EndDate,
 			CreatedAt: r.CreatedAt,

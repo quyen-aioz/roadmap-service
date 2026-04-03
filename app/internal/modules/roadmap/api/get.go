@@ -27,6 +27,8 @@ func (h *Handler) GetRoadmap(ctx context.Context, _ *humax.Empty) (*GetRoadmapRe
 			Content:   r.Content,
 			Status:    r.Status,
 			GroupID:   r.GroupID,
+			CTALabel:  r.CTALabel,
+			CTALink:   r.CTALink,
 			StartDate: r.StartDate,
 			EndDate:   r.EndDate,
 			CreatedAt: r.CreatedAt,
@@ -38,6 +40,28 @@ func (h *Handler) GetRoadmap(ctx context.Context, _ *humax.Empty) (*GetRoadmapRe
 		Paging: httpx.Paging[roadmapmodel.RoadmapDTO]{
 			Data:  roadmapResp,
 			Total: int64(len(roadmapResp)),
+		},
+	}, nil
+}
+
+type GetRoadmapContentResp struct {
+	roadmapmodel.RoadmapContentDTO `json:",inline"`
+}
+
+func (h *Handler) GetRoadmapContent(ctx context.Context, _ *humax.Empty) (*GetRoadmapContentResp, error) {
+	roadmapContent, err := h.svc.GetRoadmapContent(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	return &GetRoadmapContentResp{
+		RoadmapContentDTO: roadmapmodel.RoadmapContentDTO{
+			ID:          roadmapContent.ID,
+			Title:       roadmapContent.Title,
+			Description: roadmapContent.Description,
+			Content:     roadmapContent.Content,
+			CreatedAt:   roadmapContent.CreatedAt,
+			UpdatedAt:   roadmapContent.UpdatedAt,
 		},
 	}, nil
 }

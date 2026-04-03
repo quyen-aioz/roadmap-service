@@ -1,6 +1,7 @@
 package humax
 
 import (
+	"context"
 	"net/http"
 	"roadmap/pkg/jwtx"
 	"strings"
@@ -32,7 +33,7 @@ func (m *AccessTokenMiddleware) Apply(_ huma.API) func(ctx huma.Context, next fu
 			return
 		}
 
-		claims, err := jwtx.GetUserClaims(tokenStr)
+		claims, err := jwtx.GetUserClaim(tokenStr)
 		if err != nil {
 			ErrorResponse(ctx, http.StatusUnauthorized, err)
 			return
@@ -46,4 +47,22 @@ func (m *AccessTokenMiddleware) Apply(_ huma.API) func(ctx huma.Context, next fu
 
 func RequireAccessToken() Middleware {
 	return &accessTokenMiddleware
+}
+
+func GetUserIDFromCtx(ctx context.Context) (string, error) {
+	claims, ok := ctx.Value(_claimsContextKey).(*jwtx.UserClaim)
+	if !ok {
+		return "", jwtx.ErrMissingToken
+	}
+
+	return claims.UserID, nil
+}
+
+func GetUserClaimsFromCtx(ctx context.Context) (*jwtx.UserClaim, error) {
+	claims, ok := ctx.Value(_claimsContextKey).(*jwtx.UserClaim)
+	if !ok {
+		return nil, jwtx.ErrMissingToken
+	}
+
+	return claims, nil
 }

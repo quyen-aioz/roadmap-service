@@ -9,6 +9,8 @@ import (
 
 type Repository interface {
 	GetRoadmap(ctx context.Context) ([]roadmapmodel.Roadmap, error)
+	GetRoadmapContent(ctx context.Context) (roadmapmodel.RoadmapContent, error)
+	UpdateRoadmapContent(ctx context.Context, roadmapContent roadmapmodel.UpdateRoadmapContentReq) error
 	Create(ctx context.Context, roadmap *roadmapmodel.Roadmap) (string, error)
 	BulkUpsert(ctx context.Context, roadmaps []roadmapmodel.Roadmap) error
 	BulkDelete(ctx context.Context, deleteIDs []string) error

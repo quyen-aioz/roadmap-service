@@ -12,6 +12,8 @@ type Roadmap struct {
 	Content   string
 	Status    Status
 	GroupID   GroupID
+	CTALabel  string
+	CTALink   string
 	StartDate time.Time
 	EndDate   time.Time
 	CreatedAt time.Time
@@ -37,6 +39,28 @@ type UpdateRoadmapReq struct {
 	Content   *string
 	Status    *Status
 	GroupID   *GroupID
+	CTALabel  *string
+	CTALink   *string
 	StartDate *time.Time
 	EndDate   *time.Time
+}
+
+type RoadmapContent struct {
+	ID          string `gorm:"primaryKey"`
+	Title       string
+	Description string
+	Content     string
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+	DeletedAt   gorm.DeletedAt `gorm:"index"`
+}
+
+func (RoadmapContent) TableName() string {
+	return "roadmap_content"
+}
+
+type UpdateRoadmapContentReq struct {
+	Title       *string
+	Description *string
+	Content     *string
 }

@@ -11,9 +11,11 @@ type (
 	CreateRoadmapRequest struct {
 		Body struct {
 			Title     string               `json:"title" validate:"required"`
-			Content   string               `json:"content" validate:"required"`
+			Content   string               `json:"content,omitempty"`
 			Status    roadmapmodel.Status  `json:"status" validate:"required"`
 			GroupID   roadmapmodel.GroupID `json:"group_id" validate:"required"`
+			CTALabel  string               `json:"cta_label,omitempty"`
+			CTALink   string               `json:"cta_link,omitempty"`
 			StartDate time.Time            `json:"start_date" validate:"required"`
 			EndDate   time.Time            `json:"end_date" validate:"required"`
 		}
@@ -38,6 +40,8 @@ func (h *Handler) CreateRoadmap(ctx context.Context, req *CreateRoadmapRequest) 
 		Content:   req.Body.Content,
 		Status:    status,
 		GroupID:   groupID,
+		CTALabel:  req.Body.CTALabel,
+		CTALink:   req.Body.CTALink,
 		StartDate: req.Body.StartDate,
 		EndDate:   req.Body.EndDate,
 		CreatedAt: time.Now(),
@@ -61,6 +65,8 @@ type (
 			Content   *string               `json:"content,omitempty"`
 			Status    *roadmapmodel.Status  `json:"status,omitempty"`
 			GroupID   *roadmapmodel.GroupID `json:"group_id,omitempty"`
+			CTALabel  *string               `json:"cta_label,omitempty"`
+			CTALink   *string               `json:"cta_link,omitempty"`
 			StartDate *time.Time            `json:"start_date,omitempty"`
 			EndDate   *time.Time            `json:"end_date,omitempty"`
 		}
@@ -83,6 +89,8 @@ func (h *Handler) UpdateRoadmap(ctx context.Context, req *UpdateRoadmapRequest) 
 		Content:   req.Body.Content,
 		Status:    status,
 		GroupID:   groupID,
+		CTALabel:  req.Body.CTALabel,
+		CTALink:   req.Body.CTALink,
 		StartDate: req.Body.StartDate,
 		EndDate:   req.Body.EndDate,
 	})
@@ -97,6 +105,8 @@ func (h *Handler) UpdateRoadmap(ctx context.Context, req *UpdateRoadmapRequest) 
 		Content:   roadmap.Content,
 		Status:    roadmap.Status,
 		GroupID:   roadmap.GroupID,
+		CTALabel:  roadmap.CTALabel,
+		CTALink:   roadmap.CTALink,
 		StartDate: roadmap.StartDate,
 		EndDate:   roadmap.EndDate,
 		CreatedAt: roadmap.CreatedAt,
@@ -115,4 +125,32 @@ func (h *Handler) DeleteRoadmap(ctx context.Context, req *DeleteRoadmapRequest) 
 	}
 
 	return &humax.Empty{}, nil
+}
+
+type UpdateRoadmapContentRequest struct {
+	Body struct {
+		Title       *string `json:"title,omitempty"`
+		Description *string `json:"description,omitempty"`
+		Content     *string `json:"content,omitempty"`
+	}
+}
+
+func (h *Handler) UpdateRoadmapContent(ctx context.Context, req *UpdateRoadmapContentRequest) (*roadmapmodel.RoadmapContentDTO, error) {
+	roadmapContent, err := h.svc.UpdateRoadmapContent(ctx, roadmapmodel.UpdateRoadmapContentReq{
+		Title:       req.Body.Title,
+		Description: req.Body.Description,
+		Content:     req.Body.Content,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return &roadmapmodel.RoadmapContentDTO{
+		ID:          roadmapContent.ID,
+		Title:       roadmapContent.Title,
+		Description: roadmapContent.Description,
+		Content:     roadmapContent.Content,
+		CreatedAt:   roadmapContent.CreatedAt,
+		UpdatedAt:   roadmapContent.UpdatedAt,
+	}, nil
 }

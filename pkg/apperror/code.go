@@ -15,9 +15,16 @@ const (
 
 // Roadmap
 const (
-	ErrInvalidStatus  ErrorCode = "invalid_status"
-	ErrInvalidGroupID ErrorCode = "invalid_group"
-	ErrNotFound       ErrorCode = "not_found"
+	ErrInvalidStatus   ErrorCode = "invalid_status"
+	ErrInvalidGroupID  ErrorCode = "invalid_group"
+	ErrRoadmapNotFound ErrorCode = "group_not_found"
+)
+
+// User
+const (
+	ErrUserNotFound      ErrorCode = "user_not_found"
+	ErrInvalidPassword   ErrorCode = "invalid_password"
+	ErrUserAlreadyExists ErrorCode = "user_already_exists"
 )
 
 func (e ErrorCode) String() string {

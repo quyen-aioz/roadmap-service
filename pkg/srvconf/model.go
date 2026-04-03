@@ -6,10 +6,11 @@ type Configuration interface {
 }
 
 type Server struct {
-	Name string
-	Host string
-	Port uint16
-	Env  string
+	Name         string
+	Host         string
+	Port         uint16
+	Env          string
+	AllowOrigins []string
 }
 
 type SQLite struct {
@@ -21,10 +22,16 @@ type JWT struct {
 	SigningKey string
 }
 
+type SeedAdmin struct {
+	Username string
+	Password string
+}
+
 type BaseConfig struct {
-	Server Server
-	SQLite SQLite
-	JWT    JWT
+	Server    Server
+	SQLite    SQLite
+	JWT       JWT
+	SeedAdmin SeedAdmin
 }
 
 func (c BaseConfig) GetServer() Server {

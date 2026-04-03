@@ -60,3 +60,18 @@ func (svc *Service) SyncRoadmap(ctx context.Context, roadmaps []roadmapmodel.Roa
 
 	return result, nil
 }
+
+const RoadmapContentID = "singleton"
+
+func (svc *Service) UpdateRoadmapContent(ctx context.Context, req roadmapmodel.UpdateRoadmapContentReq) (*roadmapmodel.RoadmapContent, error) {
+	if err := svc.repo.UpdateRoadmapContent(ctx, req); err != nil {
+		return nil, err
+	}
+
+	content, err := svc.repo.GetRoadmapContent(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	return &content, nil
+}

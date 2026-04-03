@@ -3,6 +3,7 @@ package routes
 import (
 	"fmt"
 	"log"
+	"roadmap/app/internal/core/serverconfig"
 	"roadmap/pkg/humax"
 	"time"
 
@@ -23,8 +24,13 @@ func New() *echo.Echo {
 }
 
 func initHTTPServer(e *echo.Echo) error {
+	conf := serverconfig.Get()
 	// quyen@note: middleware here
-
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: conf.Server.AllowOrigins,
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization},
+		AllowMethods: []string{echo.GET, echo.POST, echo.PUT, echo.DELETE, echo.OPTIONS},
+	}))
 	e.Use(middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
 		LogMethod:  true,
 		LogStatus:  true,
