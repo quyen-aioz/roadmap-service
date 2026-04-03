@@ -43,3 +43,25 @@ func (h *Handler) GetRoadmap(ctx context.Context, _ *humax.Empty) (*GetRoadmapRe
 		},
 	}, nil
 }
+
+type GetRoadmapContentResp struct {
+	roadmapmodel.RoadmapContentDTO `json:",inline"`
+}
+
+func (h *Handler) GetRoadmapContent(ctx context.Context, _ *humax.Empty) (*GetRoadmapContentResp, error) {
+	roadmapContent, err := h.svc.GetRoadmapContent(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	return &GetRoadmapContentResp{
+		RoadmapContentDTO: roadmapmodel.RoadmapContentDTO{
+			ID:          roadmapContent.ID,
+			Title:       roadmapContent.Title,
+			Description: roadmapContent.Description,
+			Content:     roadmapContent.Content,
+			CreatedAt:   roadmapContent.CreatedAt,
+			UpdatedAt:   roadmapContent.UpdatedAt,
+		},
+	}, nil
+}

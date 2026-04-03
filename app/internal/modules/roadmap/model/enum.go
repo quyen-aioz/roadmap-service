@@ -54,3 +54,5 @@ func (s GroupID) IsValid() bool {
 	}
 	return false
 }
+
+const RoadmapContentID = "singleton"

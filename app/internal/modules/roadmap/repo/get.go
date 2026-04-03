@@ -18,6 +18,16 @@ func (r *SqliteRepo) GetRoadmap(ctx context.Context) ([]roadmapmodel.Roadmap, er
 	return roadmaps, err
 }
 
+func (r *SqliteRepo) GetRoadmapContent(ctx context.Context) (roadmapmodel.RoadmapContent, error) {
+	var roadmapContent roadmapmodel.RoadmapContent
+	err := r.db.WithContext(ctx).Raw(`
+        SELECT id, title, description, content, created_at, updated_at, deleted_at
+        FROM roadmap_content
+        WHERE deleted_at IS NULL
+    `).Scan(&roadmapContent).Error
+	return roadmapContent, err
+}
+
 func (r *SqliteRepo) FindOne(ctx context.Context, q roadmapmodel.FindQueryBuilder) (roadmapmodel.Roadmap, error) {
 	whereClause, args := q.Build()
 

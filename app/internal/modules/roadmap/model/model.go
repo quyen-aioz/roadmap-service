@@ -44,3 +44,23 @@ type UpdateRoadmapReq struct {
 	StartDate *time.Time
 	EndDate   *time.Time
 }
+
+type RoadmapContent struct {
+	ID          string `gorm:"primaryKey"`
+	Title       string
+	Description string
+	Content     string
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+	DeletedAt   gorm.DeletedAt `gorm:"index"`
+}
+
+func (RoadmapContent) TableName() string {
+	return "roadmap_content"
+}
+
+type UpdateRoadmapContentReq struct {
+	Title       *string
+	Description *string
+	Content     *string
+}

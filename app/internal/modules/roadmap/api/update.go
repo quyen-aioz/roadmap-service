@@ -126,3 +126,31 @@ func (h *Handler) DeleteRoadmap(ctx context.Context, req *DeleteRoadmapRequest) 
 
 	return &humax.Empty{}, nil
 }
+
+type UpdateRoadmapContentRequest struct {
+	Body struct {
+		Title       *string `json:"title,omitempty"`
+		Description *string `json:"description,omitempty"`
+		Content     *string `json:"content,omitempty"`
+	}
+}
+
+func (h *Handler) UpdateRoadmapContent(ctx context.Context, req *UpdateRoadmapContentRequest) (*roadmapmodel.RoadmapContentDTO, error) {
+	roadmapContent, err := h.svc.UpdateRoadmapContent(ctx, roadmapmodel.UpdateRoadmapContentReq{
+		Title:       req.Body.Title,
+		Description: req.Body.Description,
+		Content:     req.Body.Content,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return &roadmapmodel.RoadmapContentDTO{
+		ID:          roadmapContent.ID,
+		Title:       roadmapContent.Title,
+		Description: roadmapContent.Description,
+		Content:     roadmapContent.Content,
+		CreatedAt:   roadmapContent.CreatedAt,
+		UpdatedAt:   roadmapContent.UpdatedAt,
+	}, nil
+}

@@ -40,7 +40,7 @@ func initSqlite(_ context.Context) error {
 		return fmt.Errorf("failed to init db: %w", err)
 	}
 
-	if err := db.AutoMigrate(&roadmapmodel.Roadmap{}, &roadmapgroupmodel.RoadmapGroup{}, &usermodel.User{}); err != nil {
+	if err := db.AutoMigrate(&roadmapmodel.Roadmap{}, &roadmapmodel.RoadmapContent{}, &roadmapgroupmodel.RoadmapGroup{}, &usermodel.User{}); err != nil {
 		return fmt.Errorf("failed to migrate table: %w", err)
 	}
 
@@ -61,7 +61,11 @@ func seed(db *gorm.DB) error {
 		return fmt.Errorf("failed to seed groups: %w", err)
 	}
 
-	log.Println("Seeded groups")
+	if err := seedRoadmapContent(db); err != nil {
+		return fmt.Errorf("failed to seed roadmap content: %w", err)
+	}
+
+	log.Println("Seeded data")
 	return nil
 }
 
@@ -84,6 +88,15 @@ func seedGroups(db *gorm.DB) error {
 	}
 
 	return db.Clauses(clause.OnConflict{DoNothing: true}).Create(&groups).Error
+}
+
+func seedRoadmapContent(db *gorm.DB) error {
+	return db.Clauses(clause.OnConflict{DoNothing: true}).Create(&roadmapmodel.RoadmapContent{
+		ID:          roadmapmodel.RoadmapContentID,
+		Title:       "AIOZ Roadmap",
+		Description: "Inside the People-Powered Internet",
+		Content:     "In 2026, AIOZ Network stays infrastructure-first, expanding our ecosystem through familiar routes like browsing, streaming, listening, and building. This liveboard tracks what's shipping across AIOZ Storage, Pin, Stream, and AI as we continue to make Web3 more accessible. \nUse this Gantt chart to view updates by product pillar or timespan. Click any item for details, links, and demos.",
+	}).Error
 }
 
 func initJWT() error {

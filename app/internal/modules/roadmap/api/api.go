@@ -50,6 +50,25 @@ func Init(api humax.API) error {
 		CustomMiddlewares: middlewares,
 	}, handler.SyncRoadmap)
 
+	// GET /v1/roadmap/content
+	humax.Register(api, humax.Operation{
+		Operation: huma.Operation{
+			OperationID: "Get roadmap content",
+			Method:      http.MethodGet,
+			Path:        "/content",
+		},
+	}, handler.GetRoadmapContent)
+
+	// POST /v1/roadmap/content
+	humax.Register(api, humax.Operation{
+		Operation: huma.Operation{
+			OperationID: "Update roadmap content",
+			Method:      http.MethodPost,
+			Path:        "/content",
+		},
+		CustomMiddlewares: middlewares,
+	}, handler.UpdateRoadmapContent)
+
 	// // POST /v1/roadmap
 	// humax.Register(api, humax.Operation{
 	// 	Operation: huma.Operation{
