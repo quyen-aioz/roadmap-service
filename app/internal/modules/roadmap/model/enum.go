@@ -27,6 +27,7 @@ const (
 	GroupIDAiozPin      GroupID = "aioz-pin"
 	GroupIDAiozWallet   GroupID = "aioz-wallet"
 	GroupIDAiozAds      GroupID = "aioz-ads"
+	GroupIDAiozAiAgents GroupID = "aioz-ai-agents"
 	GroupIDAiozBridge   GroupID = "aioz-bridge"
 	GroupIDAiozDex      GroupID = "aioz-dex"
 	GroupIDAiozExplorer GroupID = "aioz-explorer"

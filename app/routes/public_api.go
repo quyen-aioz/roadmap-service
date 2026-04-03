@@ -3,20 +3,20 @@ package routes
 import (
 	"fmt"
 	authapi "roadmap/app/internal/modules/auth/api"
-	fooapi "roadmap/app/internal/modules/foo/api"
 	roadmapapi "roadmap/app/internal/modules/roadmap/api"
+	roadmapgroupapi "roadmap/app/internal/modules/roadmapgroup/api"
 	"roadmap/pkg/humax"
 )
 
 func registerPublicAPIv1(api humax.API) error {
-	fooAPI := api.Group("/foo", "Foo")
-	if err := fooapi.Init(fooAPI); err != nil {
-		return fmt.Errorf("register foo api: %w", err)
-	}
-
 	roadmapAPI := api.Group("/roadmap", "Roadmap")
 	if err := roadmapapi.Init(roadmapAPI); err != nil {
 		return fmt.Errorf("register roadmap api: %w", err)
+	}
+
+	roadmapGroupAPI := api.Group("/roadmap-group", "Roadmap Group")
+	if err := roadmapgroupapi.Init(roadmapGroupAPI); err != nil {
+		return fmt.Errorf("register roadmap group api: %w", err)
 	}
 
 	authAPI := api.Group("/auth", "Auth")
