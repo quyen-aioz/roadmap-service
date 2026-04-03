@@ -12,6 +12,8 @@ type Roadmap struct {
 	Content   string
 	Status    Status
 	GroupID   GroupID
+	CTALabel  string
+	CTALink   string
 	StartDate time.Time
 	EndDate   time.Time
 	CreatedAt time.Time
@@ -37,6 +39,8 @@ type UpdateRoadmapReq struct {
 	Content   *string
 	Status    *Status
 	GroupID   *GroupID
+	CTALabel  *string
+	CTALink   *string
 	StartDate *time.Time
 	EndDate   *time.Time
 }

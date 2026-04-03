@@ -52,6 +52,8 @@ type RoadmapUpdateBuilder struct {
 	Content   *string
 	Status    *Status
 	GroupID   *GroupID
+	CTALabel  *string
+	CTALink   *string
 	StartDate *time.Time
 	EndDate   *time.Time
 }
@@ -75,6 +77,14 @@ func (u *RoadmapUpdateBuilder) Build() (string, []any, error) {
 	if u.GroupID != nil {
 		clauses = append(clauses, "group_id = ?")
 		args = append(args, *u.GroupID)
+	}
+	if u.CTALabel != nil {
+		clauses = append(clauses, "cta_label = ?")
+		args = append(args, *u.CTALabel)
+	}
+	if u.CTALink != nil {
+		clauses = append(clauses, "cta_link = ?")
+		args = append(args, *u.CTALink)
 	}
 	if u.StartDate != nil {
 		clauses = append(clauses, "start_date = ?")

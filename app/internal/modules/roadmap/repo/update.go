@@ -8,8 +8,8 @@ import (
 
 func (r *SqliteRepo) Create(ctx context.Context, roadmap *roadmapmodel.Roadmap) (string, error) {
 	query := `
-		INSERT INTO roadmap (id, title, content, status, group_id, start_date, end_date, created_at, updated_at)
-		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+		INSERT INTO roadmap (id, title, content, status, group_id, cta_label, cta_link, start_date, end_date, created_at, updated_at)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 	`
 
 	err := r.db.WithContext(ctx).Exec(query,
@@ -18,6 +18,8 @@ func (r *SqliteRepo) Create(ctx context.Context, roadmap *roadmapmodel.Roadmap) 
 		roadmap.Content,
 		roadmap.Status,
 		roadmap.GroupID,
+		roadmap.CTALabel,
+		roadmap.CTALink,
 		roadmap.StartDate,
 		roadmap.EndDate,
 		roadmap.CreatedAt,
