@@ -10,6 +10,7 @@ import (
 	usermodel "roadmap/app/internal/modules/user/model"
 	userrepo "roadmap/app/internal/modules/user/repo"
 	userservice "roadmap/app/internal/modules/user/service"
+	"roadmap/pkg/aws3sx"
 	"roadmap/pkg/jwtx"
 	"roadmap/pkg/sqlitex"
 
@@ -27,8 +28,27 @@ func init3rdParties(ctx context.Context) error {
 	g.Go(func() error {
 		return initJWT()
 	})
+	g.Go(func() error {
+		return initAwsS3()
+	})
 
 	return g.Wait()
+}
+
+func initAwsS3() error {
+	conf := serverconfig.Get().W3Storage
+
+	if err := aws3sx.Init(aws3sx.Config{
+		AccessKey:      conf.AccessKey,
+		SecretKey:      conf.SecretKey,
+		Endpoint:       conf.Endpoint,
+		PublicEndpoint: conf.PublicEndpoint,
+		Bucket:         conf.Bucket,
+	}); err != nil {
+		return fmt.Errorf("failed to init s3: %w", err)
+	}
+
+	return nil
 }
 
 func initSqlite(_ context.Context) error {

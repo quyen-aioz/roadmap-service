@@ -69,6 +69,16 @@ func Init(api humax.API) error {
 		CustomMiddlewares: middlewares,
 	}, handler.UpdateRoadmapContent)
 
+	// POST /v1/roadmap/presign-upload
+	humax.Register(api, humax.Operation{
+		Operation: huma.Operation{
+			OperationID: "Presign Roadmap Thumbnail Upload",
+			Method:      http.MethodPost,
+			Path:        "/presign-upload",
+		},
+		CustomMiddlewares: middlewares,
+	}, handler.PresignUpload)
+
 	// // POST /v1/roadmap
 	// humax.Register(api, humax.Operation{
 	// 	Operation: huma.Operation{

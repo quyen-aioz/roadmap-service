@@ -4,17 +4,19 @@ import "time"
 
 type (
 	RoadmapDTO struct {
-		ID        string    `json:"id"`
-		Title     string    `json:"title"`
-		Content   string    `json:"content"`
-		Status    Status    `json:"status"`
-		GroupID   GroupID   `json:"group_id"`
-		CTALabel  string    `json:"cta_label"`
-		CTALink   string    `json:"cta_link"`
-		StartDate time.Time `json:"start_date"`
-		EndDate   time.Time `json:"end_date"`
-		CreatedAt time.Time `json:"created_at"`
-		UpdatedAt time.Time `json:"updated_at"`
+		ID            string    `json:"id"`
+		Title         string    `json:"title"`
+		Content       string    `json:"content"`
+		Status        Status    `json:"status"`
+		GroupID       GroupID   `json:"group_id"`
+		CTALabel      string    `json:"cta_label"`
+		CTALink       string    `json:"cta_link"`
+		StartDate     time.Time `json:"start_date"`
+		EndDate       time.Time `json:"end_date"`
+		ThumbnailURL  string    `json:"thumbnail_url"`
+		ThumbnailType string    `json:"thumbnail_type"`
+		CreatedAt     time.Time `json:"created_at"`
+		UpdatedAt     time.Time `json:"updated_at"`
 	}
 )
 

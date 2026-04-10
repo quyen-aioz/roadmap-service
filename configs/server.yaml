@@ -15,3 +15,10 @@ JWT:
 SeedAdmin:
   Username: "admin"
   Password: "admin"
+W3Storage:
+  AccessKey: "FS2UKG3YWKOEK7RXC4ITCRXJVE"
+  SecretKey: "G65GF57VVQAXIAZPSUYGMSQHH6JKJNCCON76G6CWA3QIV4ZRQ6TQ"
+  Endpoint: "https://s3-storage.attoaioz.cyou"
+  PublicEndpoint: "https://api-pub-storage.attoaioz.cyou"
+  Bucket: "test-roadmap"
+  PathFolder: "thumbnail"

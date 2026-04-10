@@ -61,14 +61,16 @@ type (
 	UpdateRoadmapRequest struct {
 		ID   string `path:"id" validate:"required"`
 		Body struct {
-			Title     *string               `json:"title,omitempty"`
-			Content   *string               `json:"content,omitempty"`
-			Status    *roadmapmodel.Status  `json:"status,omitempty"`
-			GroupID   *roadmapmodel.GroupID `json:"group_id,omitempty"`
-			CTALabel  *string               `json:"cta_label,omitempty"`
-			CTALink   *string               `json:"cta_link,omitempty"`
-			StartDate *time.Time            `json:"start_date,omitempty"`
-			EndDate   *time.Time            `json:"end_date,omitempty"`
+			Title         *string               `json:"title,omitempty"`
+			Content       *string               `json:"content,omitempty"`
+			Status        *roadmapmodel.Status  `json:"status,omitempty"`
+			GroupID       *roadmapmodel.GroupID `json:"group_id,omitempty"`
+			CTALabel      *string               `json:"cta_label,omitempty"`
+			CTALink       *string               `json:"cta_link,omitempty"`
+			StartDate     *time.Time            `json:"start_date,omitempty"`
+			EndDate       *time.Time            `json:"end_date,omitempty"`
+			ThumbnailURL  *string               `json:"thumbnail_url,omitempty"`
+			ThumbnailType *string               `json:"thumbnail_type,omitempty"`
 		}
 	}
 )
@@ -85,14 +87,16 @@ func (h *Handler) UpdateRoadmap(ctx context.Context, req *UpdateRoadmapRequest) 
 	}
 
 	roadmap, err := h.svc.UpdateRoadmap(ctx, req.ID, roadmapmodel.UpdateRoadmapReq{
-		Title:     req.Body.Title,
-		Content:   req.Body.Content,
-		Status:    status,
-		GroupID:   groupID,
-		CTALabel:  req.Body.CTALabel,
-		CTALink:   req.Body.CTALink,
-		StartDate: req.Body.StartDate,
-		EndDate:   req.Body.EndDate,
+		Title:         req.Body.Title,
+		Content:       req.Body.Content,
+		Status:        status,
+		GroupID:       groupID,
+		CTALabel:      req.Body.CTALabel,
+		CTALink:       req.Body.CTALink,
+		StartDate:     req.Body.StartDate,
+		EndDate:       req.Body.EndDate,
+		ThumbnailURL:  req.Body.ThumbnailURL,
+		ThumbnailType: req.Body.ThumbnailType,
 	})
 
 	if err != nil {
@@ -100,17 +104,19 @@ func (h *Handler) UpdateRoadmap(ctx context.Context, req *UpdateRoadmapRequest) 
 	}
 
 	return &roadmapmodel.RoadmapDTO{
-		ID:        roadmap.ID,
-		Title:     roadmap.Title,
-		Content:   roadmap.Content,
-		Status:    roadmap.Status,
-		GroupID:   roadmap.GroupID,
-		CTALabel:  roadmap.CTALabel,
-		CTALink:   roadmap.CTALink,
-		StartDate: roadmap.StartDate,
-		EndDate:   roadmap.EndDate,
-		CreatedAt: roadmap.CreatedAt,
-		UpdatedAt: roadmap.UpdatedAt,
+		ID:            roadmap.ID,
+		Title:         roadmap.Title,
+		Content:       roadmap.Content,
+		Status:        roadmap.Status,
+		GroupID:       roadmap.GroupID,
+		CTALabel:      roadmap.CTALabel,
+		CTALink:       roadmap.CTALink,
+		StartDate:     roadmap.StartDate,
+		EndDate:       roadmap.EndDate,
+		ThumbnailURL:  roadmap.ThumbnailURL,
+		ThumbnailType: roadmap.ThumbnailType,
+		CreatedAt:     roadmap.CreatedAt,
+		UpdatedAt:     roadmap.UpdatedAt,
 	}, nil
 }
 
