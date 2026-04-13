@@ -16,9 +16,9 @@ SeedAdmin:
   Username: "admin"
   Password: "admin"
 W3Storage:
-  AccessKey: "FS2UKG3YWKOEK7RXC4ITCRXJVE"
-  SecretKey: "G65GF57VVQAXIAZPSUYGMSQHH6JKJNCCON76G6CWA3QIV4ZRQ6TQ"
+  AccessKey: "FT3UVQORELK2EQ25OE3643WUY4"
+  SecretKey: "G4NFHHPDRM6MCKNEOUIV4SMW7XBUXDMVKQTS67CAE63SA5GJJZDQ"
   Endpoint: "https://s3-storage.attoaioz.cyou"
   PublicEndpoint: "https://api-pub-storage.attoaioz.cyou"
-  Bucket: "test-roadmap"
+  Bucket: "roadmap"
   PathFolder: "thumbnail"
