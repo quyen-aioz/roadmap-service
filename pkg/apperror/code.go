@@ -15,9 +15,10 @@ const (
 
 // Roadmap
 const (
-	ErrInvalidStatus   ErrorCode = "invalid_status"
-	ErrInvalidGroupID  ErrorCode = "invalid_group"
-	ErrRoadmapNotFound ErrorCode = "group_not_found"
+	ErrInvalidStatus        ErrorCode = "invalid_status"
+	ErrInvalidGroupID       ErrorCode = "invalid_group"
+	ErrRoadmapNotFound      ErrorCode = "group_not_found"
+	ErrUnsupportedMediaType ErrorCode = "unsupported_media_type"
 )
 
 // User

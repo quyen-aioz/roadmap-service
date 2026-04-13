@@ -7,18 +7,20 @@ import (
 )
 
 type Roadmap struct {
-	ID        string `gorm:"primaryKey"`
-	Title     string
-	Content   string
-	Status    Status
-	GroupID   GroupID
-	CTALabel  string
-	CTALink   string
-	StartDate time.Time
-	EndDate   time.Time
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt gorm.DeletedAt `gorm:"index"`
+	ID            string `gorm:"primaryKey"`
+	Title         string
+	Content       string
+	Status        Status
+	GroupID       GroupID
+	CTALabel      string
+	CTALink       string
+	StartDate     time.Time
+	EndDate       time.Time
+	ThumbnailURL  string
+	ThumbnailType string
+	CreatedAt     time.Time
+	UpdatedAt     time.Time
+	DeletedAt     gorm.DeletedAt `gorm:"index"`
 }
 
 // quyen@note: gorm hook
@@ -35,15 +37,29 @@ func (Roadmap) TableName() string {
 }
 
 type UpdateRoadmapReq struct {
-	Title     *string
-	Content   *string
-	Status    *Status
-	GroupID   *GroupID
-	CTALabel  *string
-	CTALink   *string
-	StartDate *time.Time
-	EndDate   *time.Time
+	Title         *string
+	Content       *string
+	Status        *Status
+	GroupID       *GroupID
+	CTALabel      *string
+	CTALink       *string
+	StartDate     *time.Time
+	EndDate       *time.Time
+	ThumbnailURL  *string
+	ThumbnailType *string
 }
+
+type (
+	PresignUploadReq struct {
+		TaskID      string
+		ContentType string
+	}
+
+	PresignUploadResp struct {
+		UploadURL string
+		PublicURL string
+	}
+)
 
 type RoadmapContent struct {
 	ID          string `gorm:"primaryKey"`

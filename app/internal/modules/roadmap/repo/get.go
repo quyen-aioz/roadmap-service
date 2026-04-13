@@ -11,7 +11,7 @@ import (
 func (r *SqliteRepo) GetRoadmap(ctx context.Context) ([]roadmapmodel.Roadmap, error) {
 	var roadmaps []roadmapmodel.Roadmap
 	err := r.db.WithContext(ctx).Raw(`
-        SELECT id, title, content, status, group_id, cta_label, cta_link, start_date, end_date, created_at, updated_at, deleted_at
+        SELECT id, title, content, status, group_id, cta_label, cta_link, start_date, end_date, thumbnail_url, thumbnail_type, created_at, updated_at, deleted_at
         FROM roadmap
         WHERE deleted_at IS NULL
     `).Scan(&roadmaps).Error
@@ -31,7 +31,7 @@ func (r *SqliteRepo) GetRoadmapContent(ctx context.Context) (roadmapmodel.Roadma
 func (r *SqliteRepo) FindOne(ctx context.Context, q roadmapmodel.FindQueryBuilder) (roadmapmodel.Roadmap, error) {
 	whereClause, args := q.Build()
 
-	baseQuery := `SELECT id, title, content, status, group_id, cta_label, cta_link, start_date, end_date, created_at, updated_at, deleted_at FROM roadmap`
+	baseQuery := `SELECT id, title, content, status, group_id, cta_label, cta_link, start_date, end_date, thumbnail_url, thumbnail_type, created_at, updated_at, deleted_at FROM roadmap`
 	fullQuery := baseQuery + whereClause + " LIMIT 1"
 
 	var roadmap roadmapmodel.Roadmap
@@ -45,4 +45,15 @@ func (r *SqliteRepo) FindOne(ctx context.Context, q roadmapmodel.FindQueryBuilde
 	}
 
 	return roadmap, nil
+}
+
+func (r *SqliteRepo) GetAllThumbnailURLs(ctx context.Context) ([]string, error) {
+	var urls []string
+	err := r.db.WithContext(ctx).Raw(`
+		SELECT thumbnail_url
+		FROM roadmap
+		WHERE deleted_at IS NULL
+		  AND thumbnail_url != ''
+	`).Scan(&urls).Error
+	return urls, err
 }

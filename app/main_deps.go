@@ -5,18 +5,25 @@ import (
 	"fmt"
 	"log"
 	"roadmap/app/internal/core/serverconfig"
+	roadmapjob "roadmap/app/internal/modules/roadmap/job"
 	roadmapmodel "roadmap/app/internal/modules/roadmap/model"
+	roadmaprepo "roadmap/app/internal/modules/roadmap/repo"
 	roadmapgroupmodel "roadmap/app/internal/modules/roadmapgroup/model"
 	usermodel "roadmap/app/internal/modules/user/model"
 	userrepo "roadmap/app/internal/modules/user/repo"
 	userservice "roadmap/app/internal/modules/user/service"
+	"roadmap/pkg/aws3sx"
+	"roadmap/pkg/cronx"
 	"roadmap/pkg/jwtx"
 	"roadmap/pkg/sqlitex"
+	"time"
 
 	"golang.org/x/sync/errgroup"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )
+
+var cronRunner *cronx.Runner
 
 func init3rdParties(ctx context.Context) error {
 	g, ctx := errgroup.WithContext(ctx)
@@ -27,8 +34,56 @@ func init3rdParties(ctx context.Context) error {
 	g.Go(func() error {
 		return initJWT()
 	})
+	g.Go(func() error {
+		return initAwsS3()
+	})
 
-	return g.Wait()
+	if err := g.Wait(); err != nil {
+		return err
+	}
+
+	// cron depends on sqlite + s3 being ready, so init after
+	return initCron()
+}
+
+func initAwsS3() error {
+	conf := serverconfig.Get().W3Storage
+
+	if err := aws3sx.Init(aws3sx.Config{
+		AccessKey:      conf.AccessKey,
+		SecretKey:      conf.SecretKey,
+		Endpoint:       conf.Endpoint,
+		PublicEndpoint: conf.PublicEndpoint,
+		Bucket:         conf.Bucket,
+	}); err != nil {
+		return fmt.Errorf("failed to init s3: %w", err)
+	}
+
+	return nil
+}
+
+func initCron() error {
+	db, err := sqlitex.Get()
+	if err != nil {
+		return fmt.Errorf("cron: get db: %w", err)
+	}
+
+	s3Client, err := aws3sx.Get()
+	if err != nil {
+		return fmt.Errorf("cron: get s3: %w", err)
+	}
+
+	repo := roadmaprepo.New(db)
+	conf := serverconfig.Get().W3Storage
+
+	cronRunner = cronx.New()
+	cronRunner.Register(
+		roadmapjob.NewCleanupOrphanThumbnailsJob(repo, s3Client, conf.PathFolder),
+		24*time.Hour,
+		cronx.RunOnStart(), // run once on startup so you don't wait 24h after deploy
+	)
+
+	return nil
 }
 
 func initSqlite(_ context.Context) error {

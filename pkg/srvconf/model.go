@@ -27,11 +27,21 @@ type SeedAdmin struct {
 	Password string
 }
 
+type W3Storage struct {
+	AccessKey      string
+	SecretKey      string
+	Endpoint       string
+	PublicEndpoint string
+	Bucket         string
+	PathFolder     string
+}
+
 type BaseConfig struct {
 	Server    Server
 	SQLite    SQLite
 	JWT       JWT
 	SeedAdmin SeedAdmin
+	W3Storage W3Storage
 }
 
 func (c BaseConfig) GetServer() Server {

@@ -11,15 +11,17 @@ type (
 	SyncRoadmapRequest struct {
 		Body struct {
 			Upsert []struct {
-				ID        string               `json:"id,omitempty"`
-				Title     string               `json:"title" validate:"required"`
-				Content   string               `json:"content,omitempty"`
-				Status    roadmapmodel.Status  `json:"status" validate:"required"`
-				GroupID   roadmapmodel.GroupID `json:"group_id" validate:"required"`
-				CTALabel  string               `json:"cta_label,omitempty"`
-				CTALink   string               `json:"cta_link,omitempty"`
-				StartDate time.Time            `json:"start_date" validate:"required"`
-				EndDate   time.Time            `json:"end_date" validate:"required"`
+				ID            string               `json:"id,omitempty"`
+				Title         string               `json:"title" validate:"required"`
+				Content       string               `json:"content,omitempty"`
+				Status        roadmapmodel.Status  `json:"status" validate:"required"`
+				GroupID       roadmapmodel.GroupID `json:"group_id" validate:"required"`
+				CTALabel      string               `json:"cta_label,omitempty"`
+				CTALink       string               `json:"cta_link,omitempty"`
+				StartDate     time.Time            `json:"start_date" validate:"required"`
+				EndDate       time.Time            `json:"end_date" validate:"required"`
+				ThumbnailURL  string               `json:"thumbnail_url,omitempty"`
+				ThumbnailType string               `json:"thumbnail_type,omitempty"`
 			} `json:"roadmap"`
 			Delete []string `json:"delete_ids"`
 		}
@@ -40,15 +42,17 @@ func (h *Handler) SyncRoadmap(ctx context.Context, req *SyncRoadmapRequest) (*Sy
 		}
 
 		roadmaps[i] = roadmapmodel.Roadmap{
-			ID:        r.ID,
-			Title:     r.Title,
-			Content:   r.Content,
-			Status:    r.Status,
-			GroupID:   r.GroupID,
-			CTALabel:  r.CTALabel,
-			CTALink:   r.CTALink,
-			StartDate: r.StartDate,
-			EndDate:   r.EndDate,
+			ID:            r.ID,
+			Title:         r.Title,
+			Content:       r.Content,
+			Status:        r.Status,
+			GroupID:       r.GroupID,
+			CTALabel:      r.CTALabel,
+			CTALink:       r.CTALink,
+			StartDate:     r.StartDate,
+			EndDate:       r.EndDate,
+			ThumbnailURL:  r.ThumbnailURL,
+			ThumbnailType: r.ThumbnailType,
 		}
 	}
 
@@ -60,17 +64,19 @@ func (h *Handler) SyncRoadmap(ctx context.Context, req *SyncRoadmapRequest) (*Sy
 	dtos := make([]roadmapmodel.RoadmapDTO, len(result))
 	for i, r := range result {
 		dtos[i] = roadmapmodel.RoadmapDTO{
-			ID:        r.ID,
-			Title:     r.Title,
-			Content:   r.Content,
-			Status:    r.Status,
-			GroupID:   r.GroupID,
-			CTALabel:  r.CTALabel,
-			CTALink:   r.CTALink,
-			StartDate: r.StartDate,
-			EndDate:   r.EndDate,
-			CreatedAt: r.CreatedAt,
-			UpdatedAt: r.UpdatedAt,
+			ID:            r.ID,
+			Title:         r.Title,
+			Content:       r.Content,
+			Status:        r.Status,
+			GroupID:       r.GroupID,
+			CTALabel:      r.CTALabel,
+			CTALink:       r.CTALink,
+			StartDate:     r.StartDate,
+			EndDate:       r.EndDate,
+			ThumbnailURL:  r.ThumbnailURL,
+			ThumbnailType: r.ThumbnailType,
+			CreatedAt:     r.CreatedAt,
+			UpdatedAt:     r.UpdatedAt,
 		}
 	}
 

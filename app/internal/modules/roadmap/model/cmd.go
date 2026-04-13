@@ -48,14 +48,16 @@ func (q *FindQueryBuilder) Build() (string, []any) {
 }
 
 type RoadmapUpdateBuilder struct {
-	Title     *string
-	Content   *string
-	Status    *Status
-	GroupID   *GroupID
-	CTALabel  *string
-	CTALink   *string
-	StartDate *time.Time
-	EndDate   *time.Time
+	Title         *string
+	Content       *string
+	Status        *Status
+	GroupID       *GroupID
+	CTALabel      *string
+	CTALink       *string
+	StartDate     *time.Time
+	EndDate       *time.Time
+	ThumbnailURL  *string
+	ThumbnailType *string
 }
 
 func (u *RoadmapUpdateBuilder) Build() (string, []any, error) {
@@ -93,6 +95,14 @@ func (u *RoadmapUpdateBuilder) Build() (string, []any, error) {
 	if u.EndDate != nil {
 		clauses = append(clauses, "end_date = ?")
 		args = append(args, u.EndDate.UTC())
+	}
+	if u.ThumbnailURL != nil {
+		clauses = append(clauses, "thumbnail_url = ?")
+		args = append(args, *u.ThumbnailURL)
+	}
+	if u.ThumbnailType != nil {
+		clauses = append(clauses, "thumbnail_type = ?")
+		args = append(args, *u.ThumbnailType)
 	}
 
 	if len(clauses) == 0 {

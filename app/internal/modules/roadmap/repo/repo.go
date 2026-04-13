@@ -18,6 +18,7 @@ type Repository interface {
 	FindOne(ctx context.Context, q roadmapmodel.FindQueryBuilder) (roadmapmodel.Roadmap, error)
 	Update(ctx context.Context, id string, u roadmapmodel.RoadmapUpdateBuilder) (string, error)
 	Delete(ctx context.Context, id string) error
+	GetAllThumbnailURLs(ctx context.Context) ([]string, error)
 }
 
 type SqliteRepo struct {
