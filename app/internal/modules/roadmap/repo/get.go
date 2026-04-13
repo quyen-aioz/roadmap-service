@@ -46,3 +46,14 @@ func (r *SqliteRepo) FindOne(ctx context.Context, q roadmapmodel.FindQueryBuilde
 
 	return roadmap, nil
 }
+
+func (r *SqliteRepo) GetAllThumbnailURLs(ctx context.Context) ([]string, error) {
+	var urls []string
+	err := r.db.WithContext(ctx).Raw(`
+		SELECT thumbnail_url
+		FROM roadmap
+		WHERE deleted_at IS NULL
+		  AND thumbnail_url != ''
+	`).Scan(&urls).Error
+	return urls, err
+}

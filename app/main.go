@@ -36,6 +36,7 @@ func main() {
 	defer cancel()
 
 	must(init3rdParties(timeoutContext), "init 3rd parties")
+	cronRunner.Start(ctx)
 
 	e := routes.New()
 
@@ -59,6 +60,8 @@ func main() {
 		if err := e.Shutdown(ctx); err != nil {
 			return fmt.Errorf("shutdown http server: %w", err)
 		}
+
+		cronRunner.Stop()
 
 		return nil
 	})
